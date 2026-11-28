@@ -1,10 +1,10 @@
 ---
-title: 'The Philosophy Behind Artificial Intelligence'
-description: 'Exploring the philosophical implications and ethical considerations of AI development and implementation'
+title: 'The Philosophy Behind AI: Five Old Questions an Engineer Must Answer'
+description: 'Turing, Searle, Moravec and Goodhart asked questions about machines and minds long ago. Today each one is an engineering decision, with a cost when it is answered badly.'
 contributors: "sam-macharia"
 pubDate: 2025-08-25
-tags: ["AI", "philosophy", "ethics", "technology"]
-excerpt: "Artificial intelligence sits at a unique intersection of computer science, cognitive psychology, and philosophy. This article explores the philosophical foundations and implications of AI development, examining how our understanding of intelligence, consciousness, and ethics shapes, and is shaped by, advances in AI technologies."
+tags: ["AI", "philosophy", "ethics", "technology", "critical-thinking", "machine-learning"]
+excerpt: "A model passes every test you give it, then fails in the field, and nobody can say why. The questions philosophers asked about machines and minds are now engineering questions, and each one has a cost when it is answered badly. This post takes five of them and says what each means for a system you build or buy."
 ---
 
 import TawkWidget from '../../../../components/TawkWidget.astro';
@@ -24,112 +24,97 @@ import { Card, CardGrid, Badge, Steps, LinkButton, FileTree } from '@astrojs/sta
 
 import YouTube from '../../../../components/YouTube.jsx';
 
-Explore the philosophical foundations and implications of AI development, examining how our understanding of intelligence, consciousness, and ethics shapes, and is shaped by, advances in AI technologies. Discover key questions about the nature of mind, moral reasoning, and what makes us uniquely human in an age of artificial intelligence. #ArtificialIntelligence #Philosophy #Ethics #Consciousness
+A model passes every test you give it. Then it goes into the field, makes a mistake no test predicted, and nobody on the team can say why. The questions philosophers asked about machines and minds long ago are now engineering questions, and each one has a cost when it is answered badly. #ArtificialIntelligence #Philosophy #Ethics #Engineering
 
-## Introduction
+> "The question of whether Machines Can Think is about as relevant as the question of whether Submarines Can Swim."
+>
+> Edsger W. Dijkstra, *The threats to computing science* (EWD898), 1984
 
-<BionicText method="advanced" intensity="medium" class="highlight">
-Artificial intelligence sits at a unique intersection of computer science, cognitive psychology, and philosophy. This article explores the philosophical foundations and implications of AI development, examining how our understanding of intelligence, consciousness, and ethics shapes—and is shaped by—advances in AI technologies.
-</BionicText>
+Dijkstra's point was not that the question is silly. It was that the useful question is a different one: what does the machine do, and can you depend on it? Every section below comes back to that.
 
-> "The question of whether <mark>a computer can think</mark> is no more interesting than the question of whether <mark>a submarine can swim</mark>." 
-> 
-> — Edsger W. Dijkstra, *The Humble Programmer*, 1972
-
-## Defining Intelligence and Consciousness
+## 1. Behaviour is all you can test
 
 <InArticleAd />
 
 
-What does it mean for a machine to be <mark>intelligent</mark>? The philosophical debate around defining intelligence has existed for centuries, but AI development forces us to operationalize these definitions in concrete ways.
+In 1950 Alan Turing proposed the imitation game (now called the Turing test) in his paper *Computing Machinery and Intelligence*. If a person talking to a machine cannot tell it from a person, he said, we have no better reason to deny that it thinks than we have for other people.
 
-### Turing's Legacy
+Turing chose behaviour because behaviour is the only thing you can observe. An engineer is in the same position. You cannot open a trained model and read what it "knows". You can only give it inputs and look at what comes out.
 
-Alan Turing's famous imitation game (now known as the Turing Test) proposed that if a machine could fool a human into believing it was human through conversation, we should consider it intelligent. This behavioral approach sidesteps questions about internal states of consciousness, focusing instead on observable outputs.
+**What this means for you:** your tests are your definition of "it works". A test set is a claim about the world the system will meet. If the field contains cases the test set does not (night shifts, a new supplier's parts, a sensor that drifts), the tests say nothing about them. Write down what the tests cover, and what they do not, before anyone signs.
 
-### The Chinese Room Argument
-
-Philosopher John Searle challenged this behavioral view with his Chinese Room thought experiment. He argued that a program following rules to manipulate symbols (like Chinese characters) could appear to understand Chinese without actual comprehension—suggesting that computation alone is insufficient for understanding or consciousness.
-
-## Video Presentation
+## 2. The right output is not the same as understanding
 
 <InArticleAd />
 
 
-Watch this presentation exploring the key philosophical questions at the intersection of AI and philosophy:
+In 1980 John Searle described the Chinese Room. A person who reads no Chinese sits in a room with a rule book. Notes in Chinese come in; the person follows the rules and passes the correct replies out. To people outside, the room understands Chinese. Inside, nothing does.
+
+Philosophers still argue about what the room shows about minds. For an engineer the lesson is narrower and very practical: **a system can give the right answer for the wrong reason.**
+
+A study from 2016 shows it clearly. Researchers trained an image classifier to tell wolves from huskies, using wolf photos that mostly had snow behind them. It scored well. When they checked what it looked at, it was detecting the snow, not the animal. On the test set it was right. In the field it would call a husky on snow a wolf, and a wolf on grass a dog.
+
+**What this means for you:** test the reason, not only the result. Try inputs that are unlike the training data. Change one thing at a time (the background, the lighting, the units) and see whether the answer changes when it should not.
+
+## Watch: the same questions, in one talk
 
 <YouTube videoId="VQ5Pn9YMmEY" title="The Philosophy Behind Artificial Intelligence" />
 
-## Key Philosophical Questions in AI
+## 3. Hard for people is not hard for machines
 
 <InArticleAd />
 
 
-<BionicText method="advanced" intensity="medium">
-The classical philosophical mind-body problem takes new forms in AI research: Can consciousness emerge from complex computational processes? How do we ensure AI systems reflect human values and ethical principles? These questions challenge our fundamental understanding of mind, consciousness, and moral reasoning.
-</BionicText>
+Hans Moravec noted in 1988 that it is fairly easy to make computers perform like adults on tests of intelligence or at playing chess, and very hard to give them the perception and movement skills of a one year old. This is known as Moravec's paradox.
 
-### Mind-Body Problem
+The things people find hard (long calculations, recalling every clause of a standard) are often easy for a machine. The things people find easy (reading a dirty gauge in poor light, noticing that a pump "sounds wrong", picking up a part that is not quite where it should be) are often hard.
 
-The classical philosophical mind-body problem takes new forms in AI research:
+**What this means for you:** do not judge how hard a task is for a machine by how hard it is for a person. Before you promise to automate a job, list the small perception and handling steps inside it. Those are usually where the project gets stuck.
 
-- **Functionalism**: The view that mental states are defined by their functional role rather than their physical substrate.
-- **Multiple Realizability**: Could the same "mind" be implemented in different physical systems?
-- **Emergence**: Can consciousness emerge from complex computational processes?
-
-### Ethics and Values
-
-AI systems embed values and ethical frameworks, raising critical questions:
-
-- How do we ensure AI systems reflect human values and ethical principles?
-- Whose values should be prioritized when designing AI systems?
-- Can AI help us understand our own moral reasoning?
-
-## The Impact on Human Identity
+## 4. When a measure becomes a target
 
 <InArticleAd />
 
 
-The development of AI challenges our understanding of what makes us uniquely human:
+Charles Goodhart, an economist, observed in 1975 that a measure used for control stops behaving as it did. Marilyn Strathern later put it in the form most people know: *when a measure becomes a target, it ceases to be a good measure.*
 
-1. **Creativity**: Can machines be truly creative, or are they limited to recombining existing ideas?
-2. **Autonomy**: How does AI affect human autonomy and decision-making?
-3. **Purpose**: Will AI force us to reconsider human purpose in a world where machines can perform many tasks?
+Machine learning is optimisation, so it meets this problem directly. Train a system to maximise a score, and it will find ways to raise the score that you did not intend. In a well known example from AI safety research, a cleaning robot rewarded for "no mess seen" could earn its reward by covering the mess or looking away from it. A model ranked by a public benchmark gets tuned to that benchmark until the ranking says little about real use.
 
-## Philosophical Approaches to AI Safety
+**What this means for you:** keep the number you optimise separate from the number you judge by. Check results against an outcome nobody trained on: the repair that did not happen, the complaint that did not come, the energy that was not used.
 
-<InArticleAd />
-
-
-Different philosophical traditions offer varied perspectives on AI safety:
-
-| Philosophical Approach | Core Concern | Proposed Solutions |
-|------------------------|--------------|-------------------|
-| Utilitarianism | Maximizing wellbeing | Value alignment through preference aggregation |
-| Deontology | Respecting rights and dignity | Hard constraints on AI behavior |
-| Virtue Ethics | Character development | AI that models and reinforces virtuous behavior |
-| Pragmatism | Practical outcomes | Iterative design with empirical testing |
-
-## Conclusion
+## 5. A machine cannot sign
 
 <InArticleAd />
 
 
-<BionicText method="advanced" intensity="medium" class="highlight">
-The philosophy of AI is not merely academic—it shapes how we design, deploy, and govern these increasingly powerful systems. By engaging with these deep philosophical questions, we can help ensure that AI development aligns with human flourishing and addresses our most profound values and concerns. As AI continues to advance, the philosophical dialogue between human and machine intelligence will only become more crucial for our shared future.
-</BionicText>
+The old debate asks whose values a system should follow. Each school of ethics asks a different question of a system you ship:
 
-## Next Steps
+| School | The question it asks of your system |
+|--------|-------------------------------------|
+| Consequences (utilitarianism) | Across everyone it affects, does it do more good than harm, including the people who never see it? |
+| Duties and rights (deontology) | Are there things it must never do, whatever the score says? Are those written down as hard limits? |
+| Character (virtue ethics) | Would a careful, honest engineer be content to put their name to how it behaves? |
+| What works (pragmatism) | Do we watch it in use, and change it when the evidence says it is wrong? |
 
-<InArticleAd />
+None of these settles every case, and they do not need to. Used together they are a checklist. But there is one point every school agrees on: **a machine cannot be held responsible.** When an automated decision closes a valve, refuses a loan or passes a weld, a person answers for it. Decide who that person is before the system goes live, and make sure they can see why it decided as it did.
 
+## Five questions before you trust a model
 
-<BionicText method="advanced" intensity="light">
-Ready to explore more about AI philosophy? Visit our documentation for deeper dives into specific philosophical frameworks or contact our team for discussions on ethical AI implementation.
-</BionicText>
+1. What do the tests cover, and what part of the real world do they leave out?
+2. Have we checked *why* it is right, not only *that* it is right?
+3. Which small perception or handling steps does the job contain, and has the machine shown it can do them?
+4. Is the number we optimise different from the number we judge by?
+5. Who signs for its decisions, and can that person see the reasons?
+
+If you cannot answer one of these, that is the next piece of work, and it matters more than another point of accuracy.
+
+## Going further
+
+The habits behind these questions (estimating, separating correlation from cause, noticing your own biases) are taught step by step in [Critical Thinking for Engineers](/learn/critical-thinking-engineers/), with exercises you can do in an afternoon.
+
+**Sources named in this post:** A. M. Turing, *Computing Machinery and Intelligence*, Mind, 1950. J. R. Searle, *Minds, Brains, and Programs*, Behavioral and Brain Sciences, 1980. H. Moravec, *Mind Children*, Harvard University Press, 1988. C. Goodhart, *Problems of Monetary Management: the U.K. Experience*, 1975. M. Strathern, *'Improving ratings': audit in the British University system*, European Review, 1997. M. T. Ribeiro, S. Singh and C. Guestrin, *"Why Should I Trust You?": Explaining the Predictions of Any Classifier*, KDD 2016 (the wolf and husky example).
 
 
 
 <InArticleAd />
 <TawkWidget />
-<Copyright />
